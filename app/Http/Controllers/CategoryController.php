@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Str;
 
 class CategoryController extends Controller
 {
@@ -29,7 +31,18 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // 1. Validate incoming data
+        $validated = $request->validate([
+            'name' => ['required', 'unique:categories,name', 'max:255'],
+        ]);
+
+        Category::create([
+            'name' => $validated['name'],
+            'slug' => Str::slug($validated['name'], '-'),
+        ]);
+
+        return redirect()
+            ->route('categories.index');
     }
 
     /**
