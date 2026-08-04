@@ -41,8 +41,10 @@ class CategoryController extends Controller
             'slug' => Str::slug($validated['name'], '-'),
         ]);
 
+        $request->session()->flash('status', 'Task was successful!');
         return redirect()
             ->route('categories.index');
+            
     }
 
     /**
