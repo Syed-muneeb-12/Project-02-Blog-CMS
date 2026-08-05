@@ -84,11 +84,11 @@
                                     </div>
                                     
                                     <!-- Category Name -->
-                                    <span class="font-semibold text-gray-800 text-base group-hover:text-gray-900">
+                                    <a href="{{ route('categories.edit', $category->slug) }}" class="font-semibold text-gray-800 text-base group-hover:text-gray-900">
                                         {{ $category->name }}
-                                    </span>
+                                    </a>
                                 </div>
-                                
+
                                 <!-- Category Slug Tag -->
                                 <span class="px-3 py-1 bg-white text-gray-500 text-xs font-mono rounded-full border border-gray-200 shadow-sm">
                                     {{ $category->slug }}
