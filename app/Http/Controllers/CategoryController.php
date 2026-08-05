@@ -44,7 +44,6 @@ class CategoryController extends Controller
         $request->session()->flash('status', 'Task was successful!');
         return redirect()
             ->route('categories.index');
-            
     }
 
     /**
