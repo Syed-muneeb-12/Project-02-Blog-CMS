@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Str;
 
 class CategoryController extends Controller
@@ -15,7 +14,8 @@ class CategoryController extends Controller
     public function index()
     {
         $categories = Category::all();
-        return view('categories.index',compact('categories'));
+
+        return view('categories.index', compact('categories'));
     }
 
     /**
@@ -42,6 +42,7 @@ class CategoryController extends Controller
         ]);
 
         $request->session()->flash('status', 'Task was successful!');
+
         return redirect()
             ->route('categories.index');
     }
@@ -51,7 +52,7 @@ class CategoryController extends Controller
      */
     public function show(Category $category)
     {
-        return view(cate)
+        
     }
 
     /**
@@ -59,7 +60,7 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
-        //
+        return view('categories.edit', compact('category'));
     }
 
     /**
