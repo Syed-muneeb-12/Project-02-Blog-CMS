@@ -28,50 +28,67 @@
             <!-- Form Card -->
             <div class="bg-white w-full max-w-2xl rounded-2xl shadow-xl p-8 md:p-10 relative z-10 border border-gray-100">
                 
+                <!-- Premium Success Flash Message -->
+                @if (session('success'))
+                    <div class="mb-8 p-4 bg-white border border-[#4ade80]/60 shadow-sm rounded-xl flex items-center gap-4">
+                        <div class="p-2 bg-green-50 rounded-full shrink-0">
+                            <svg class="w-5 h-5 text-[#4ade80]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                        </div>
+                        <p class="text-gray-800 font-semibold text-sm">{{ session('success') }}</p>
+                    </div>
+                @endif
+
                 <!-- Header -->
                 <div class="mb-8 text-center md:text-left">
                     <h1 class="text-4xl font-bold bg-gradient-to-r from-[#4ade80] to-[#fb7185] bg-clip-text text-transparent pb-1">
-                        Edit New Category
+                        Edit Category
                     </h1>
-                    <p class="text-gray-500 mt-2 text-sm">Add a new section to organize your platform's content.</p>
+                    <p class="text-gray-500 mt-2 text-sm">Update or remove this section from your platform.</p>
                 </div>
 
-                <!-- Proper Laravel Form -->
-                <form action="{{ route('categories.update', $category->slug) }}" method="POST" class="space-y-6">
+                <!-- Update Form (Closed before the buttons) -->
+                <form id="update-form" action="{{ route('categories.update', $category->slug) }}" method="POST">
                     @csrf
                     @method('PUT')
                     
                     <!-- Field 1: Category Name -->
                     <div>
                         <label for="Name" class="block text-gray-700 font-medium text-sm mb-2">
-                           Edit Category  <span class="text-[#fb7185]">*</span>
+                           Category Name <span class="text-[#fb7185]">*</span>
                         </label>
-                        <!-- Added name="name" here so Laravel receives the input -->
                         <input type="text" id="Name" name="name" required
                             class="w-full border border-gray-300 rounded-lg px-4 py-3 text-gray-800 focus:outline-none focus:ring-2 focus:ring-[#fb7185]/50 focus:border-[#fb7185] transition-colors shadow-sm"
                             value="{{ old('name', $category->name) }}">
                     </div>
+                </form>
 
-                    <!-- Action Buttons -->
-                    <div class="pt-4 flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-4 gap-3 sm:gap-0 border-t border-gray-100">
-                        <!-- Changed Cancel to an anchor tag to go back -->
-                        <a href="{{ route('categories.index') }}" 
-                            class="px-6 py-3 border-2 border-gray-700 text-gray-700 font-semibold rounded-lg hover:bg-gray-50 hover:text-gray-900 transition-colors w-full sm:w-auto text-center block">
-                            Cancel
-                        </a>
+                <!-- Action Buttons Container (Perfectly Aligned) -->
+                <div class="pt-6 mt-8 flex flex-col sm:flex-row sm:justify-end gap-3 border-t border-gray-100">
+                    
+                    <!-- Cancel Button -->
+                    <a href="{{ route('categories.index') }}" 
+                        class="px-6 py-3 border-2 border-gray-300 text-gray-700 font-semibold rounded-lg hover:bg-gray-50 hover:text-gray-900 transition-colors w-full sm:w-auto text-center order-3 sm:order-1">
+                        Cancel
+                    </a>
 
-                        <button type="submit" 
-                            class="px-6 py-3 bg-gradient-to-r from-[#4ade80] to-[#fb7185] text-white font-semibold rounded-lg hover:scale-105 hover:shadow-lg transition-all duration-200 w-full sm:w-auto text-center">
-                            Edit Category
-                        </button>
-                    <form action="{{ route('categories.destroy',$category->slug) }}" method="POST">
+                    <!-- Delete Button Form -->
+                    <form action="{{ route('categories.destroy', $category->slug) }}" method="POST" class="w-full sm:w-auto order-2 sm:order-2" onsubmit="return confirm('Are you sure you want to delete this category?');">
                         @csrf
                         @method('DELETE')
-                        <button type="submit">Delete</button>
+                        <button type="submit" class="px-6 py-3 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-lg hover:scale-105 hover:shadow-lg transition-all duration-200 w-full text-center h-full">
+                            Delete
+                        </button>
                     </form>
-                    </div>
 
-                </form>
+                    <!-- Edit Button (Triggers the update-form above) -->
+                    <button type="submit" form="update-form"
+                        class="px-6 py-3 bg-gradient-to-r from-[#4ade80] to-[#fb7185] text-white font-semibold rounded-lg hover:scale-105 hover:shadow-lg transition-all duration-200 w-full sm:w-auto text-center order-1 sm:order-3">
+                        Save Changes
+                    </button>
+
+                </div>
             </div>
         </main>
     </div>

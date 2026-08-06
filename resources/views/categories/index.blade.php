@@ -28,7 +28,7 @@
             <!-- Content Card -->
             <div class="bg-white w-full max-w-3xl rounded-2xl shadow-xl p-8 md:p-10 relative z-10 border border-gray-100 my-auto">
                 
-                <!-- Toast Notification Popup (Fades out after 3 seconds) -->
+                <!-- Toast Notification Popup (Fades out after 3 seconds) for STATUS -->
                 @if (session('status'))
                     <div x-data="{ show: true }"
                          x-show="show"
@@ -44,6 +44,29 @@
                                 </svg>
                             </div>
                             <span class="text-sm md:text-base">{{ session('status') }}</span>
+                        </div>
+                        <button @click="show = false" class="text-emerald-700 hover:text-emerald-900 font-bold ml-4 focus:outline-none">
+                            &times;
+                        </button>
+                    </div>
+                @endif
+
+                <!-- NEW: Toast Notification Popup (Fades out after 3 seconds) for SUCCESS (e.g. Deletions) -->
+                @if (session('success'))
+                    <div x-data="{ show: true }"
+                         x-show="show"
+                         x-init="setTimeout(() => show = false, 3000)"
+                         x-transition:leave="transition ease-in duration-300"
+                         x-transition:leave-start="opacity-100 scale-100"
+                         x-transition:leave-end="opacity-0 scale-95"
+                         class="mb-6 p-4 rounded-xl bg-emerald-50 border border-emerald-500 text-emerald-900 font-medium flex items-center justify-between shadow-sm">
+                        <div class="flex items-center space-x-3">
+                            <div class="flex-shrink-0 w-6 h-6 text-emerald-600">
+                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                            </div>
+                            <span class="text-sm md:text-base">{{ session('success') }}</span>
                         </div>
                         <button @click="show = false" class="text-emerald-700 hover:text-emerald-900 font-bold ml-4 focus:outline-none">
                             &times;
