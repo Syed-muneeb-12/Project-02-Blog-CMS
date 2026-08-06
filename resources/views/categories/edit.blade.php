@@ -59,10 +59,16 @@
                             class="px-6 py-3 border-2 border-gray-700 text-gray-700 font-semibold rounded-lg hover:bg-gray-50 hover:text-gray-900 transition-colors w-full sm:w-auto text-center block">
                             Cancel
                         </a>
+
                         <button type="submit" 
                             class="px-6 py-3 bg-gradient-to-r from-[#4ade80] to-[#fb7185] text-white font-semibold rounded-lg hover:scale-105 hover:shadow-lg transition-all duration-200 w-full sm:w-auto text-center">
                             Edit Category
                         </button>
+                    <form action="{{ route('categories.destroy',$category->slug) }}" method="POST">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit">Delete</button>
+                    </form>
                     </div>
 
                 </form>
