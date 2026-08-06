@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 
 class CategoryController extends Controller
 {
@@ -50,10 +51,7 @@ class CategoryController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Category $category)
-    {
-        
-    }
+    public function show(Category $category) {}
 
     /**
      * Show the form for editing the specified resource.
@@ -68,17 +66,16 @@ class CategoryController extends Controller
      */
     public function update(Request $request, Category $category)
     {
-            $validated=$request->validate([
-            'name' => ['required', 'unique:categories,name', 'max:255'],
+        $validated = $request->validate([
+            'name' => ['required', 'max:255', Rule::unique('categories', 'name')->ignore($category)],
         ]);
-        Category::create([
+
+        $category->update([
             'name' => $validated['name'],
             'slug' => Str::slug($validated['name'], '-'),
         ]);
 
         return redirect()->route('categories.index');
-        
-        
     }
 
     /**
