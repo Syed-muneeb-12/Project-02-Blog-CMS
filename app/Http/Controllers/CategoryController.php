@@ -68,7 +68,17 @@ class CategoryController extends Controller
      */
     public function update(Request $request, Category $category)
     {
-        //
+            $validated=$request->validate([
+            'name' => ['required', 'unique:categories,name', 'max:255'],
+        ]);
+        Category::create([
+            'name' => $validated['name'],
+            'slug' => Str::slug($validated['name'], '-'),
+        ]);
+
+        return redirect()->route('categories.index');
+        
+        
     }
 
     /**
