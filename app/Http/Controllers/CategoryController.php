@@ -84,7 +84,8 @@ class CategoryController extends Controller
     public function destroy(Request $request, Category $category)
     {
 
-        $category->delete();
+        // Use the static destroy method which accepts the model id
+        Category::destroy($category->id);
 
         return redirect()->route('categories.index')->with('success', 'Category deleted successfully!');
     }
