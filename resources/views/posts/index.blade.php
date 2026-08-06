@@ -1,0 +1,1 @@
+<a href="{{ url('posts/create') }}">Create Post</a>

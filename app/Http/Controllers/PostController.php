@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Post;
 use Illuminate\Http\Request;
 
@@ -12,7 +13,9 @@ class PostController extends Controller
      */
     public function index()
     {
-        //
+        $posts = Post::all();
+        return view('posts.index',compact('posts'));
+
     }
 
     /**
@@ -20,7 +23,9 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+
+        $categories = Category::orderBy('name','asc')->get(['id', 'name']);
+        return view('posts.create',compact('categories'));
     }
 
     /**
@@ -28,7 +33,14 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+              'title' => 'required|string|min:5|max:255|unique:posts,title',
+              'body' => 'required|string|min:10',
+              'category_id' => 'required|exists:categories,id'
+        ]);
+        Post::create($validated);
+        return redirect()->route('posts.index')->with('session','Post Added Successfully');
+
     }
 
     /**
