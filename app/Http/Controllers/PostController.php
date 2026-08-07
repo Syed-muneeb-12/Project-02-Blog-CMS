@@ -17,7 +17,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::all();
+        $posts = Post::with('category','user')->get();
         return view('posts.index',compact('posts'));
 
     }
@@ -41,14 +41,14 @@ class PostController extends Controller
               'title' => 'required|string|min:5|max:255|unique:posts,title',
               'body' => 'required|string|min:10',
               'category_id' => 'required|exists:categories,id',
-              'status' => Rule::in(['draft', 'published'])
+              'status' => 'required|in:draft,published'
         ]);
         Post::create([
-            'title' => $validated('title'),
-            'slug' => Str::slug($validated('name'),'-'),
-            'body' => $validated('body'),
-            'category_id' => $validated('category_id'),
-            'status' =>$validated('status')
+            'title' => $validated['title'],
+            'slug' => Str::slug($validated['title'], '-'),
+            'body' => $validated['body'],
+            'category_id' => $validated['category_id'],
+            'status' => $validated['status']
 
        ]);
         return redirect()->route('posts.index')->with('session','Post Added Successfully');
