@@ -5,6 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
+use Illuminate\Support\Str;
+
+
 
 class PostController extends Controller
 {
@@ -36,9 +40,17 @@ class PostController extends Controller
         $validated = $request->validate([
               'title' => 'required|string|min:5|max:255|unique:posts,title',
               'body' => 'required|string|min:10',
-              'category_id' => 'required|exists:categories,id'
+              'category_id' => 'required|exists:categories,id',
+              'status' => Rule::in(['draft', 'published'])
         ]);
-        Post::create($validated);
+        Post::create([
+            'title' => $validated('title'),
+            'slug' => Str::slug($validated('name'),'-'),
+            'body' => $validated('body'),
+            'category_id' => $validated('category_id'),
+            'status' =>$validated('status')
+
+       ]);
         return redirect()->route('posts.index')->with('session','Post Added Successfully');
 
     }

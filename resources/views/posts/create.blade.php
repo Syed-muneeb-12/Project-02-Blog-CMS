@@ -36,7 +36,7 @@
         </div>
         <select name="status" id="sttatus">
             <option value="draft">draft</option>
-            <option value="published">published</option>
+            <option value="published">publish</option>
         </select>
     </form>
 </x-layout>
