@@ -17,9 +17,21 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::with('category','user')->get();
-        return view('posts.index',compact('posts'));
-
+        $posts = Post::select([
+                'id',
+                'title',
+                'category_id',
+                'user_id',
+                'status',
+                'created_at',
+            ])
+            ->with([
+                'category:id,name',
+                'user:id,name',
+            ])
+            ->orderBy('created_at', 'desc')
+            ->paginate(20);
+        return view('posts.index', compact('posts'));
     }
 
     /**
