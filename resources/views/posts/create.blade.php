@@ -9,8 +9,8 @@
             </div>
             <nav class="flex-1 px-4 space-y-2 mt-4">
                 <a href="{{ route('dashboard') }}" class="block px-4 py-2.5 rounded-lg text-gray-400 hover:text-white hover:bg-gray-800 transition-colors">Dashboard</a>
-                <a href="{{ route('posts.index') }}" class="block px-4 py-2.5 rounded-lg text-gray-400 hover:text-white hover:bg-gray-800 transition-colors">Posts</a>
-                <a href="{{ route('categories.index') }}" class="block px-4 py-2.5 rounded-lg text-white bg-gray-800 transition-colors font-medium">Categories</a>
+                <a href="{{ route('posts.index') }}" class="block px-4 py-2.5 rounded-lg text-white bg-gray-800 transition-colors font-medium">Posts</a>
+                <a href="{{ route('categories.index') }}" class="block px-4 py-2.5 rounded-lg text-gray-400 hover:text-white hover:bg-gray-800 transition-colors">Categories</a>
                 <a href="{{ route('settings') }}" class="block px-4 py-2.5 rounded-lg text-gray-400 hover:text-white hover:bg-gray-800 transition-colors">Settings</a>
             </nav>
         </aside>
@@ -86,10 +86,10 @@
 
                         <!-- Status Select -->
                         <div>
-                            <label for="sttatus" class="block text-sm font-semibold text-gray-700 mb-1.5">Status</label>
+                            <label for="status" class="block text-sm font-semibold text-gray-700 mb-1.5">Status</label>
                             <select 
                                 name="status" 
-                                id="sttatus"
+                                id="status"
                                 required
                                 class="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-lg shadow-sm focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500/30 focus:border-emerald-500 transition-all duration-200 cursor-pointer"
                             >

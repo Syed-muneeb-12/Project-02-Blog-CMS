@@ -25,7 +25,7 @@
                 @csrf
                 <!-- Name -->
                 <div>
-                    <label for="name" class="block text-sm font-semibold text-gray-700 mb-1.5">Name</label>
+                    <label for="name" class="block text-sm font-semibold text-gray-700 mb-1.5">{{old('name', 'John Doe')}}</label>
                     <input id="name" name="name" type="text" required 
                            class="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-lg shadow-sm focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500/30 focus:border-emerald-500 transition-all duration-200" 
                            placeholder="John Doe" />
