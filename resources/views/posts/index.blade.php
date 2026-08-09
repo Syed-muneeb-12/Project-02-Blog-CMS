@@ -118,7 +118,7 @@
                                         <!-- Actions -->
                                         <div class="flex items-center space-x-2">
                                             <!-- Edit Link -->
-                                            <a href="#" class="px-3 py-1.5 text-xs font-medium text-gray-600 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 hover:text-gray-900 transition-colors shadow-sm">
+                                            <a href="{{ route('posts.edit',$post) }}" class="px-3 py-1.5 text-xs font-medium text-gray-600 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 hover:text-gray-900 transition-colors shadow-sm">
                                                 Edit
                                             </a>
 

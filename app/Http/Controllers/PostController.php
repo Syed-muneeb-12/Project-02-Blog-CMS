@@ -80,17 +80,34 @@ class PostController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Post $post)
-    {
-        //
-    }
+        public function edit(Post $post)
+        {
+             $categories = Category::orderBy('name', 'asc')->get(['id', 'name']);
+            
+            return view('posts.edit', compact('post','categories' ));
+        }
 
     /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, Post $post)
     {
-        //
+              $validated = $request->validate([
+              'title' => 'required|string|min:5|max:255',
+              'body' => 'required|string|min:10',
+              'category_id' => 'required|exists:categories,id',
+              'status' => 'required|in:draft,published'
+        ]);
+        Post::update([
+            'user_id' => Auth::id(),
+            'title' => $validated['title'],
+            'slug' => Str::slug($validated['title'], '-'),
+            'body' => $validated['body'],
+            'category_id' => $validated['category_id'],
+            'status' => $validated['status']
+
+       ]);
+        return redirect()->route('posts.index')->with('session','Post edited Successfully');
     }
 
     /**
