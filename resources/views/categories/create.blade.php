@@ -1,70 +1,100 @@
-<x-layout title="category">
-    <!-- Wrapper (Replaces body tag for Blade components) -->
-    <div class="flex h-screen bg-gradient-to-br from-green-50 via-gray-50 to-rose-50 font-sans overflow-hidden">
+<x-layout title="Create Category">
+    <!-- Main Application Wrapper (Dashboard Theme) -->
+    <div class="flex min-h-screen bg-gray-900 font-sans">
 
         <!-- Sidebar -->
-        <aside class="w-64 bg-[#2A2A2A] flex-shrink-0 hidden md:flex flex-col border-r border-gray-800">
-            <div class="p-6">
-                <h2 class="text-white text-xl font-bold tracking-wider">ADMIN<span class="text-[#fb7185]">PANEL</span></h2>
+        <aside class="w-64 flex-shrink-0 bg-gray-900 border-r border-gray-800 flex flex-col hidden md:flex">
+            <!-- App Logo / Title -->
+            <div class="p-6 border-b border-gray-800">
+                <h2 class="text-2xl font-bold bg-gradient-to-r from-[#4ade80] to-[#fb7185] bg-clip-text text-transparent">
+                    Blog CMS
+                </h2>
             </div>
+            
+            <!-- Navigation -->
             <nav class="flex-1 px-4 space-y-2 mt-4">
                 <a href="{{ route('dashboard') }}" class="block px-4 py-2.5 rounded-lg text-gray-400 hover:text-white hover:bg-gray-800 transition-colors">Dashboard</a>
                 <a href="{{ route('posts.index') }}" class="block px-4 py-2.5 rounded-lg text-gray-400 hover:text-white hover:bg-gray-800 transition-colors">Posts</a>
                 <a href="{{ route('categories.index') }}" class="block px-4 py-2.5 rounded-lg text-white bg-gray-800 transition-colors font-medium">Categories</a>
                 <a href="{{ route('settings') }}" class="block px-4 py-2.5 rounded-lg text-gray-400 hover:text-white hover:bg-gray-800 transition-colors">Settings</a>
             </nav>
+            
+            <!-- Bottom Sidebar Area (Logout) -->
+            <div class="p-4 border-t border-gray-800">
+                <form method="POST" action="{{ route('logout') }}">
+                    @csrf
+                    <button type="submit" class="w-full text-left px-4 py-2.5 text-red-400 hover:text-red-300 hover:bg-gray-800 rounded-lg transition-colors flex items-center gap-2">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
+                        Log Out
+                    </button>
+                </form>
+            </div>
         </aside>
 
         <!-- Main Content Area -->
-        <main class="flex-1 relative flex items-center justify-center p-6 overflow-y-auto">
+        <main class="flex-1 relative overflow-hidden bg-gradient-to-br from-green-50 via-gray-50 to-rose-50 flex flex-col">
             
             <!-- Abstract Watermark/Floating Elements (Background) -->
             <div class="absolute inset-0 pointer-events-none overflow-hidden z-0">
-                <div class="absolute top-10 left-20 w-64 h-64 border-[40px] border-[#4ade80]/10 rounded-full blur-sm"></div>
-                <div class="absolute -bottom-20 right-10 w-96 h-96 border-[60px] border-[#fb7185]/10 rounded-full blur-md"></div>
+                <div class="absolute top-10 left-10 md:left-20 w-64 h-64 border-[40px] border-[#4ade80]/10 rounded-full blur-sm"></div>
+                <div class="absolute -bottom-20 right-4 md:right-10 w-96 h-96 border-[60px] border-[#fb7185]/10 rounded-full blur-md"></div>
                 <div class="absolute top-1/4 right-1/4 w-12 h-12 bg-[#fb7185]/20 rounded-full blur-sm"></div>
             </div>
 
-            <!-- Form Card -->
-            <div class="bg-white w-full max-w-2xl rounded-2xl shadow-xl p-8 md:p-10 relative z-10 border border-gray-100">
-                
-                <!-- Header -->
-                <div class="mb-8 text-center md:text-left">
-                    <h1 class="text-4xl font-bold bg-gradient-to-r from-[#4ade80] to-[#fb7185] bg-clip-text text-transparent pb-1">
-                        Create New Category
-                    </h1>
-                    <p class="text-gray-500 mt-2 text-sm">Add a new section to organize your platform's content.</p>
+            <!-- Top Header -->
+            <header class="bg-white/80 backdrop-blur-md border-b border-gray-200 p-4 md:px-8 flex justify-between items-center relative z-10">
+                <h1 class="text-xl font-semibold text-gray-800">Categories Management</h1>
+                <div class="text-sm font-medium text-gray-600 bg-white px-4 py-2 rounded-full shadow-sm border border-gray-100">
+                    Welcome back, {{ auth()->user()->name ?? 'User' }}
                 </div>
+            </header>
 
-                <!-- Proper Laravel Form -->
-                <form action="{{ route('categories.store') }}" method="POST" class="space-y-6">
-                    @csrf
+            <!-- Content Container -->
+            <div class="p-6 md:p-8 relative z-10 overflow-y-auto">
+                
+                <!-- Form Card -->
+                <div class="bg-white w-full max-w-2xl mx-auto rounded-2xl shadow-xl p-8 md:p-10 relative z-10 border border-gray-100">
                     
-                    <!-- Field 1: Category Name -->
-                    <div>
-                        <label for="Name" class="block text-gray-700 font-medium text-sm mb-2">
-                            Category Name <span class="text-[#fb7185]">*</span>
-                        </label>
-                        <!-- Added name="name" here so Laravel receives the input -->
-                        <input type="text" id="Name" name="name" required
-                            class="w-full border border-gray-300 rounded-lg px-4 py-3 text-gray-800 focus:outline-none focus:ring-2 focus:ring-[#fb7185]/50 focus:border-[#fb7185] transition-colors shadow-sm"
-                            placeholder="e.g., Event Logistics">
+                    <!-- Header -->
+                    <div class="mb-8 text-center md:text-left">
+                        <h2 class="text-3xl font-bold bg-gradient-to-r from-[#4ade80] to-[#fb7185] bg-clip-text text-transparent pb-1">
+                            Create New Category
+                        </h2>
+                        <p class="text-gray-500 mt-2 text-sm">Add a new section to organize your platform's content.</p>
                     </div>
 
-                    <!-- Action Buttons -->
-                    <div class="pt-4 flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-4 gap-3 sm:gap-0 border-t border-gray-100">
-                        <!-- Changed Cancel to an anchor tag to go back -->
-                        <a href="{{ route('categories.index') }}" 
-                            class="px-6 py-3 border-2 border-gray-700 text-gray-700 font-semibold rounded-lg hover:bg-gray-50 hover:text-gray-900 transition-colors w-full sm:w-auto text-center block">
-                            Cancel
-                        </a>
-                        <button type="submit" 
-                            class="px-6 py-3 bg-gradient-to-r from-[#4ade80] to-[#fb7185] text-white font-semibold rounded-lg hover:scale-105 hover:shadow-lg transition-all duration-200 w-full sm:w-auto text-center">
-                            Create Category
-                        </button>
-                    </div>
+                    <!-- Proper Laravel Form -->
+                    <form action="{{ route('categories.store') }}" method="POST" class="space-y-6">
+                        @csrf
+                        
+                        <!-- Field 1: Category Name -->
+                        <div>
+                            <label for="Name" class="block text-gray-700 font-medium text-sm mb-2">
+                                Category Name <span class="text-[#fb7185]">*</span>
+                            </label>
+                            <input type="text" id="Name" name="name" required
+                                class="w-full border rounded-lg px-4 py-3 text-gray-800 focus:outline-none focus:ring-2 transition-colors shadow-sm @error('name') border-red-500 focus:ring-red-500/50 focus:border-red-500 @else border-gray-300 focus:ring-[#fb7185]/50 focus:border-[#fb7185] @enderror"
+                                placeholder="e.g., Event Logistics"
+                                value="{{ old('name') }}">
+                            @error('name')
+                                <p class="text-red-500 text-xs mt-1.5 font-medium">{{ $message }}</p>
+                            @enderror
+                        </div>
 
-                </form>
+                        <!-- Action Buttons -->
+                        <div class="pt-4 flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-4 gap-3 sm:gap-0 border-t border-gray-100">
+                            <a href="{{ route('categories.index') }}" 
+                                class="px-6 py-3 border-2 border-gray-300 text-gray-700 font-semibold rounded-lg hover:bg-gray-50 hover:text-gray-900 transition-colors w-full sm:w-auto text-center block">
+                                Cancel
+                            </a>
+                            <button type="submit" 
+                                class="px-6 py-3 bg-gradient-to-r from-[#4ade80] to-[#fb7185] text-white font-semibold rounded-lg hover:scale-105 hover:shadow-lg transition-all duration-200 w-full sm:w-auto text-center">
+                                Create Category
+                            </button>
+                        </div>
+
+                    </form>
+                </div>
             </div>
         </main>
     </div>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Str;
 
@@ -56,6 +57,7 @@ class PostController extends Controller
               'status' => 'required|in:draft,published'
         ]);
         Post::create([
+            'user_id' => Auth::id(),
             'title' => $validated['title'],
             'slug' => Str::slug($validated['title'], '-'),
             'body' => $validated['body'],

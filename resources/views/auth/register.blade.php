@@ -1,6 +1,6 @@
 <x-layout title="Register">
-    <!-- Main Wrapper (Matches body theme) -->
-    <div class="flex min-h-screen items-center justify-center bg-gradient-to-br from-green-50 via-gray-50 to-rose-50 font-sans overflow-hidden px-4 relative">
+    <!-- Main Wrapper (Dark Dashboard Theme) -->
+    <div class="flex min-h-screen items-center justify-center bg-gray-900 font-sans overflow-hidden px-4 relative">
         
         <!-- Abstract Watermark/Floating Elements (Background) -->
         <div class="absolute inset-0 pointer-events-none overflow-hidden z-0">
@@ -10,61 +10,62 @@
         </div>
 
         <!-- Content Card -->
-        <div class="w-full max-w-md bg-white p-8 md:p-10 rounded-2xl shadow-xl border border-gray-100 relative z-10">
+        <div class="w-full max-w-md bg-gray-900 p-8 md:p-10 rounded-2xl shadow-2xl border border-gray-800 relative z-10">
             
             <!-- Header -->
-            <div class="mb-8 pb-6 border-b border-gray-100 text-center">
+            <div class="mb-8 pb-6 border-b border-gray-800 text-center">
                 <h2 class="text-3xl font-bold bg-gradient-to-r from-[#4ade80] to-[#fb7185] bg-clip-text text-transparent pb-1">
                     Create an Account
                 </h2>
-                <p class="text-gray-500 mt-2 text-sm">Sign up to get started</p>
+                <p class="text-gray-400 mt-2 text-sm">Sign up to get started</p>
             </div>
 
             <!-- Form -->
             <form class="space-y-6" action="{{ route('register') }}" method="POST">
                 @csrf
+                
                 <!-- Name -->
                 <div>
-                    <label for="name" class="block text-sm font-semibold text-gray-700 mb-1.5">{{old('name', 'John Doe')}}</label>
-                    <input id="name" name="name" type="text" required 
-                           class="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-lg shadow-sm focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500/30 focus:border-emerald-500 transition-all duration-200" 
+                    <label for="name" class="block text-sm font-semibold text-gray-300 mb-1.5">Name</label>
+                    <input id="name" name="name" type="text" value="{{ old('name') }}" required autofocus
+                           class="w-full px-4 py-2.5 bg-gray-800 border border-gray-700 text-gray-100 rounded-lg shadow-sm focus:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-[#4ade80]/30 focus:border-[#4ade80] transition-all duration-200 placeholder-gray-500" 
                            placeholder="John Doe" />
-                           @error('name')
-                                <span class="text-red-500 text-xs mt-1 block">{{ $message }}</span>
-                         @enderror
+                    @error('name')
+                        <span class="text-red-400 text-xs mt-1 block">{{ $message }}</span>
+                    @enderror
                 </div>
 
                 <!-- Email -->
                 <div>
-                    <label for="email" class="block text-sm font-semibold text-gray-700 mb-1.5">Email address</label>
-                    <input id="email" name="email" type="email" required 
-                           class="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-lg shadow-sm focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500/30 focus:border-emerald-500 transition-all duration-200" 
+                    <label for="email" class="block text-sm font-semibold text-gray-300 mb-1.5">Email address</label>
+                    <input id="email" name="email" type="email" value="{{ old('email') }}" required 
+                           class="w-full px-4 py-2.5 bg-gray-800 border border-gray-700 text-gray-100 rounded-lg shadow-sm focus:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-[#4ade80]/30 focus:border-[#4ade80] transition-all duration-200 placeholder-gray-500" 
                            placeholder="you@example.com" />
-                           @error('email')
-                                <span class="text-red-500 text-xs mt-1 block">{{ $message }}</span>
-                         @enderror
+                    @error('email')
+                        <span class="text-red-400 text-xs mt-1 block">{{ $message }}</span>
+                    @enderror
                 </div>
 
                 <!-- Password -->
                 <div>
-                    <label for="password" class="block text-sm font-semibold text-gray-700 mb-1.5">Password</label>
+                    <label for="password" class="block text-sm font-semibold text-gray-300 mb-1.5">Password</label>
                     <input id="password" name="password" type="password" required 
-                           class="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-lg shadow-sm focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500/30 focus:border-emerald-500 transition-all duration-200" 
+                           class="w-full px-4 py-2.5 bg-gray-800 border border-gray-700 text-gray-100 rounded-lg shadow-sm focus:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-[#4ade80]/30 focus:border-[#4ade80] transition-all duration-200 placeholder-gray-500" 
                            placeholder="••••••••" />
-                           @error('password')
-                                <span class="text-red-500 text-xs mt-1 block">{{ $message }}</span>
-                         @enderror
+                    @error('password')
+                        <span class="text-red-400 text-xs mt-1 block">{{ $message }}</span>
+                    @enderror
                 </div>
 
                 <!-- Password Confirmation -->
                 <div>
-                    <label for="password_confirmation" class="block text-sm font-semibold text-gray-700 mb-1.5">Confirm Password</label>
+                    <label for="password_confirmation" class="block text-sm font-semibold text-gray-300 mb-1.5">Confirm Password</label>
                     <input id="password_confirmation" name="password_confirmation" type="password" required 
-                           class="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-lg shadow-sm focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500/30 focus:border-emerald-500 transition-all duration-200" 
+                           class="w-full px-4 py-2.5 bg-gray-800 border border-gray-700 text-gray-100 rounded-lg shadow-sm focus:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-[#4ade80]/30 focus:border-[#4ade80] transition-all duration-200 placeholder-gray-500" 
                            placeholder="••••••••" />
-                           @error('password_confirmation')
-                                <span class="text-red-500 text-xs mt-1 block">{{ $message }}</span>
-                         @enderror
+                    @error('password_confirmation')
+                        <span class="text-red-400 text-xs mt-1 block">{{ $message }}</span>
+                    @enderror
                 </div>
                 
                 <!-- Submit Button -->
@@ -77,8 +78,8 @@
                 </div>
 
                 <!-- Link to Login -->
-                <div class="text-center text-sm pt-4 border-t border-gray-100">
-                    <span class="text-gray-600">Already have an account? </span>
+                <div class="text-center text-sm pt-4 border-t border-gray-800">
+                    <span class="text-gray-400">Already have an account? </span>
                     <a href="{{ route('login') }}" class="font-semibold text-[#4ade80] hover:text-[#fb7185] transition-colors duration-300">
                         Log in here
                     </a>
