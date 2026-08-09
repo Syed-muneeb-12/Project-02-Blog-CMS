@@ -82,11 +82,19 @@ class CategoryController extends Controller
 
 
     public function destroy(Request $request, Category $category)
-    {
+    {  
 
-        // Use the static destroy method which accepts the model id
-        Category::destroy($category->id);
-
-        return redirect()->route('categories.index')->with('success', 'Category deleted successfully!');
+    // Check if the category has associated posts (adjust 'posts' to match your relationship name)
+    if ($category->posts()->exists()) {
+        return redirect()->route('categories.index')
+            ->with('error', 'Cannot delete this category because it contains active posts.');
     }
+
+    // Safe to delete if no posts are attached
+    Category::destroy($category->id);
+
+    return redirect()->route('categories.index')
+        ->with('success', 'Category deleted successfully!');
 }
+    }
+

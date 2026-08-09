@@ -55,7 +55,7 @@
                 <!-- Content Card -->
                 <div class="bg-white w-full rounded-2xl shadow-xl p-8 relative z-10 border border-gray-100">
                     
-                    <!-- Toast Notification Popup (Fades out after 3 seconds) for STATUS -->
+                    <!-- Toast Notification Popup for STATUS -->
                     @if (session('status'))
                         <div x-data="{ show: true }"
                              x-show="show"
@@ -78,7 +78,7 @@
                         </div>
                     @endif
 
-                    <!-- Toast Notification Popup (Fades out after 3 seconds) for SUCCESS (e.g. Deletions) -->
+                    <!-- Toast Notification Popup for SUCCESS (e.g. Deletions) -->
                     @if (session('success'))
                         <div x-data="{ show: true }"
                              x-show="show"
@@ -96,6 +96,29 @@
                                 <span class="text-sm md:text-base">{{ session('success') }}</span>
                             </div>
                             <button @click="show = false" class="text-emerald-700 hover:text-emerald-900 font-bold ml-4 focus:outline-none">
+                                &times;
+                            </button>
+                        </div>
+                    @endif
+
+                    <!-- Toast Notification Popup for ERROR (e.g. Foreign Key constraint failures) -->
+                    @if (session('error'))
+                        <div x-data="{ show: true }"
+                             x-show="show"
+                             x-init="setTimeout(() => show = false, 4000)"
+                             x-transition:leave="transition ease-in duration-300"
+                             x-transition:leave-start="opacity-100 scale-100"
+                             x-transition:leave-end="opacity-0 scale-95"
+                             class="mb-6 p-4 rounded-xl bg-rose-50 border border-rose-500 text-rose-900 font-medium flex items-center justify-between shadow-sm">
+                            <div class="flex items-center space-x-3">
+                                <div class="flex-shrink-0 w-6 h-6 text-rose-600">
+                                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+                                    </svg>
+                                </div>
+                                <span class="text-sm md:text-base">{{ session('error') }}</span>
+                            </div>
+                            <button @click="show = false" class="text-rose-700 hover:text-rose-900 font-bold ml-4 focus:outline-none">
                                 &times;
                             </button>
                         </div>
