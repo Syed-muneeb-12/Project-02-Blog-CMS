@@ -120,14 +120,36 @@
                         {{ $post->body }}
                     </div>
 
-                    <!-- Back Button -->
-                    <div class="mt-10 pt-6 border-t border-gray-100">
-                        <a href="{{ route('posts.index') }}" class="inline-flex items-center gap-2 px-4 py-2 bg-gray-50 text-gray-700 font-medium rounded-lg border border-gray-200 hover:bg-gray-100 transition-colors">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+                    <!-- Action Buttons Container -->
+                    <!-- Action Buttons Container -->
+                    <div class="mt-10 pt-6 border-t border-gray-100 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                        
+                        <!-- Back Button -->
+                        <a href="{{ route('posts.index') }}" class="px-6 py-2.5 bg-gray-100 text-gray-700 font-semibold rounded-lg shadow-sm hover:bg-gray-200 hover:scale-105 hover:shadow-md transition-all duration-200 inline-flex items-center justify-center gap-2">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
                             Back to Posts
                         </a>
-                    </div>
 
+                        <!-- Right Side Actions (Edit & Delete) -->
+                        <div class="flex flex-wrap items-center gap-3">
+                            <!-- Edit Button (Gradient Theme) -->
+                            <a href="{{ route('posts.edit', $post) }}" class="px-6 py-2.5 bg-gradient-to-r from-[#4ade80] to-[#fb7185] text-white font-semibold rounded-lg shadow hover:scale-105 hover:shadow-lg transition-all duration-200 inline-flex items-center justify-center gap-2">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
+                                Edit Post
+                            </a>
+
+                            <!-- Delete Form & Button -->
+                            <form action="{{ route('posts.destroy', $post) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this post?');" class="inline-block">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="px-6 py-2.5 bg-rose-600 text-white font-semibold rounded-lg shadow hover:bg-rose-700 hover:scale-105 hover:shadow-lg transition-all duration-200 inline-flex items-center justify-center gap-2">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+                                    Delete
+                                </button>
+                            </form>
+                        </div>
+
+                    </div>
                 </div>
             </div>
         </main>

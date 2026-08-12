@@ -8,9 +8,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Str;
-
-
-
 class PostController extends Controller
 {
     /**
@@ -65,7 +62,7 @@ class PostController extends Controller
             'status' => $validated['status']
 
        ]);
-        return redirect()->route('posts.index')->with('session','Post Added Successfully');
+        return redirect()->route('posts.index')->with('success','Post Added Successfully');
 
     }
 
@@ -113,14 +110,34 @@ class PostController extends Controller
                 'status' => $validated['status']
             ]);
 
-            return redirect()->route('posts.index')->with('session', 'Post edited Successfully');
+            return redirect()->route('posts.index')->with('success', 'Post edited Successfully');
         }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(Post $post)
     {
-        //
+        Post::destroy($post->id);
+        return redirect()->route('posts.index')->with('success', 'Post deleted successfully.');
+    }
+
+
+
+    // Added a the method for user
+
+    public function PublicIndex(){
+        $posts = Post::select([
+                'id',
+                'title',
+                'category_id',
+                'user_id',
+                'status',
+                'created_at',
+            ])
+            ->with([
+                'category:id,name',
+                'user:id,name',
+            ])->where('status', '=', 'published')
+            ->orderBy('created_at', 'desc')
+            ->paginate(20);
+        return view('posts.public.index', compact('posts'));
     }
 }

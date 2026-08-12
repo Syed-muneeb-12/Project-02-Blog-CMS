@@ -3,7 +3,7 @@
     <div class="flex min-h-screen bg-gray-900 font-sans">
         
         <!-- Sidebar -->
-            <aside class="w-64 flex-shrink-0 bg-gray-900 border-r border-gray-800 flex flex-col hidden md:flex">
+        <aside class="w-64 flex-shrink-0 bg-gray-900 border-r border-gray-800 flex flex-col hidden md:flex">
             <!-- App Logo / Title -->
             <div class="p-6 border-b border-gray-800">
                 <h2 class="text-2xl font-bold bg-gradient-to-r from-[#4ade80] to-[#fb7185] bg-clip-text text-transparent">
@@ -32,7 +32,7 @@
         </aside>
 
         <!-- Main Content Area -->
-            <main class="flex-1 relative overflow-hidden bg-gradient-to-br from-green-50 via-gray-50 to-rose-50 flex flex-col">
+        <main class="flex-1 relative overflow-hidden bg-gradient-to-br from-green-50 via-gray-50 to-rose-50 flex flex-col">
             
             <!-- Abstract Watermark/Floating Elements (Background) -->
             <div class="absolute inset-0 pointer-events-none overflow-hidden z-0">
@@ -54,6 +54,76 @@
                 
                 <!-- Content Card (Your Posts Logic) -->
                 <div class="bg-white w-full rounded-2xl shadow-xl p-8 relative z-10 border border-gray-100">
+
+                    <!-- Toast Notification Popup for STATUS -->
+                    
+                    @if (session('status'))
+                        <div x-data="{ show: true }"
+                             x-show="show"
+                             x-init="setTimeout(() => show = false, 3000)"
+                             x-transition:leave="transition ease-in duration-300"
+                             x-transition:leave-start="opacity-100 scale-100"
+                             x-transition:leave-end="opacity-0 scale-95"
+                             class="mb-6 p-4 rounded-xl bg-emerald-50 border border-emerald-500 text-emerald-900 font-medium flex items-center justify-between shadow-sm">
+                            <div class="flex items-center space-x-3">
+                                <div class="flex-shrink-0 w-6 h-6 text-emerald-600">
+                                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                    </svg>
+                                </div>
+                                <span class="text-sm md:text-base">{{ session('status') }}</span>
+                            </div>
+                            <button @click="show = false" class="text-emerald-700 hover:text-emerald-900 font-bold ml-4 focus:outline-none">
+                                &times;
+                            </button>
+                        </div>
+                    @endif
+
+                    <!-- Toast Notification Popup for SUCCESS (e.g. Deletions) -->
+                    @if (session('success'))
+                        <div x-data="{ show: true }"
+                             x-show="show"
+                             x-init="setTimeout(() => show = false, 3000)"
+                             x-transition:leave="transition ease-in duration-300"
+                             x-transition:leave-start="opacity-100 scale-100"
+                             x-transition:leave-end="opacity-0 scale-95"
+                             class="mb-6 p-4 rounded-xl bg-emerald-50 border border-emerald-500 text-emerald-900 font-medium flex items-center justify-between shadow-sm">
+                            <div class="flex items-center space-x-3">
+                                <div class="flex-shrink-0 w-6 h-6 text-emerald-600">
+                                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                    </svg>
+                                </div>
+                                <span class="text-sm md:text-base">{{ session('success') }}</span>
+                            </div>
+                            <button @click="show = false" class="text-emerald-700 hover:text-emerald-900 font-bold ml-4 focus:outline-none">
+                                &times;
+                            </button>
+                        </div>
+                    @endif
+
+                    <!-- Toast Notification Popup for ERROR (e.g. Foreign Key constraint failures) -->
+                    @if (session('error'))
+                        <div x-data="{ show: true }"
+                             x-show="show"
+                             x-init="setTimeout(() => show = false, 4000)"
+                             x-transition:leave="transition ease-in duration-300"
+                             x-transition:leave-start="opacity-100 scale-100"
+                             x-transition:leave-end="opacity-0 scale-95"
+                             class="mb-6 p-4 rounded-xl bg-rose-50 border border-rose-500 text-rose-900 font-medium flex items-center justify-between shadow-sm">
+                            <div class="flex items-center space-x-3">
+                                <div class="flex-shrink-0 w-6 h-6 text-rose-600">
+                                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+                                    </svg>
+                                </div>
+                                <span class="text-sm md:text-base">{{ session('error') }}</span>
+                            </div>
+                            <button @click="show = false" class="text-rose-700 hover:text-rose-900 font-bold ml-4 focus:outline-none">
+                                &times;
+                            </button>
+                        </div>
+                    @endif
                     
                     <!-- Header with Action Button -->
                     <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8 pb-6 border-b border-gray-100">
@@ -66,7 +136,7 @@
 
                         <!-- Primary Action Button -->
                         <a href="{{ url('posts/create') }}" 
-                            class="px-5 py-2.5 bg-gradient-to-r from-[#4ade80] to-[#fb7185] text-white font-semibold rounded-lg hover:scale-105 hover:shadow-lg transition-all duration-200 inline-flex items-center justify-center gap-2 text-sm self-start sm:self-auto">
+                            class="px-5 py-2.5 bg-gradient-to-r from-[#4ade80] to-[#fb7185] text-white font-semibold rounded-lg hover:scale-105 hover:shadow-lg transition-all duration-200 inline-flex items-center justify-center gap-2 text-sm self-start sm:self-auto relative z-20">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
                             </svg>
@@ -78,10 +148,14 @@
                     <div class="bg-gray-50/50 rounded-xl border border-gray-100 overflow-hidden">
                         <ul class="divide-y divide-gray-100">
                             @forelse ($posts as $post)
-                                <li class="p-5 flex flex-col md:flex-row md:items-center justify-between gap-4 hover:bg-white transition-colors duration-150 group">
+                                <!-- Added 'relative' to the list item -->
+                                <li class="relative p-5 flex flex-col md:flex-row md:items-center justify-between gap-4 hover:bg-white transition-colors duration-150 group cursor-pointer">
+                                    
+                                    <!-- Stretched link covering the whole row, redirecting to posts.show -->
+                                    <a href="{{ route('posts.show', $post) }}" class="absolute inset-0 z-10" aria-label="View {{ $post->title }}"></a>
                                     
                                     <!-- Left Section: Post Info -->
-                                    <div class="flex items-start space-x-3.5">
+                                    <div class="flex items-start space-x-3.5 relative">
                                         <!-- Decorative Icon Badge -->
                                         <div class="h-10 w-10 rounded-lg bg-emerald-50 text-[#4ade80] flex items-center justify-center border border-emerald-100/60 flex-shrink-0 mt-0.5">
                                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -109,7 +183,7 @@
                                     </div>
 
                                     <!-- Right Section: Status Tag & Action Buttons -->
-                                    <div class="flex items-center justify-between md:justify-end gap-3 pt-2 md:pt-0 border-t md:border-0 border-gray-100">
+                                    <div class="flex items-center justify-between md:justify-end gap-3 pt-2 md:pt-0 border-t md:border-0 border-gray-100 relative">
                                         <!-- Status Tag -->
                                         <span class="px-3 py-1 text-xs font-semibold rounded-full border {{ $post->status === 'published' ? 'bg-emerald-50 text-emerald-700 border-emerald-200' : 'bg-amber-50 text-amber-700 border-amber-200' }}">
                                             {{ ucfirst($post->status) }}
@@ -117,22 +191,16 @@
 
                                         <!-- Actions -->
                                         <div class="flex items-center space-x-2">
-                                            <!-- Edit Link -->
-                                            <a href="{{ route('posts.edit',$post) }}" class="px-3 py-1.5 text-xs font-medium text-gray-600 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 hover:text-gray-900 transition-colors shadow-sm">
+                                            <!-- Edit Link (Elevated z-index so it can still be clicked individually) -->
+                                            <a href="{{ route('posts.edit',$post) }}" class="relative z-20 px-3 py-1.5 text-xs font-medium text-gray-600 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 hover:text-gray-900 transition-colors shadow-sm">
                                                 Edit
-                                            </a>
-
-                                            <!-- Delete Link -->
-                                            <a href="#" class="px-3 py-1.5 text-xs font-medium text-rose-600 bg-rose-50 border border-rose-100 rounded-lg hover:bg-rose-100 transition-colors">
-                                                Delete
                                             </a>
                                         </div>
                                     </div>
-
                                 </li>
                             @empty
                                 <!-- Styled Empty State -->
-                                <li class="py-12 px-4 text-center">
+                                <li class="py-12 px-4 text-center relative">
                                     <div class="mx-auto w-12 h-12 rounded-full bg-rose-50 text-[#fb7185] flex items-center justify-center mb-3">
                                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"></path>
@@ -140,13 +208,15 @@
                                     </div>
                                     <p class="text-gray-700 font-medium">Make a Post</p>
                                     <p class="text-gray-400 text-sm mt-1 mb-4">No posts found in your database.</p>
-                                    <a href="{{ url('posts/create') }}" class="px-4 py-2 bg-gradient-to-r from-[#4ade80] to-[#fb7185] text-white text-sm font-semibold rounded-lg hover:scale-105 transition-transform inline-block">
+                                    <a href="{{ url('posts/create') }}" class="px-4 py-2 bg-gradient-to-r from-[#4ade80] to-[#fb7185] text-white text-sm font-semibold rounded-lg hover:scale-105 transition-transform inline-block relative z-20">
                                         Create Post
                                     </a>
                                 </li>
                             @endforelse
                         </ul>
                     </div>
+
+                    
 
                     <!-- Pagination Container -->
                     @if ($posts->hasPages())

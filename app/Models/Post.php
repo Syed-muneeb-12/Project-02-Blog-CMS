@@ -6,18 +6,26 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
+/**
+ * @mixin \Illuminate\Database\Eloquent\Builder
+ * @mixin \Illuminate\Database\Query\Builder
+ */
 class Post extends Model
 {
     protected $guarded = [];
 
-    public function comments():HasMany{
+    public function comments(): HasMany
+    {
         return $this->hasMany(Comment::class);
     }
-    public function user():BelongsTo{
+
+    public function user(): BelongsTo
+    {
         return $this->belongsTo(User::class);
     }
-    public function category():BelongsTo{
+
+    public function category(): BelongsTo
+    {
         return $this->belongsTo(Category::class);
     }
-        
 }
