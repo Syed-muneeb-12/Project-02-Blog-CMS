@@ -23,4 +23,5 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
 Route::middleware('guest')->group(function () {
     Route::get('/public/posts', [PostController::class, 'publicIndex'])->name('public.posts.index');
+    Route::get('/public/posts/{post}', [PostController::class, 'publicShow'])->name('public.posts.show');
 });

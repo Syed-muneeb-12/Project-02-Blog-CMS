@@ -107,7 +107,7 @@
                             </div>
 
                             <!-- Read Link -->
-                            <a href="{{ route('posts.show', $post) }}" class="inline-flex items-center text-xs font-extrabold text-emerald-600 hover:text-[#fb7185] transition-colors">
+                            <a href="{{ route('public.posts.index', $post) }}" class="inline-flex items-center text-xs font-extrabold text-emerald-600 hover:text-[#fb7185] transition-colors">
                                 Read Post
                                 <svg class="w-3.5 h-3.5 ml-1 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3" />

@@ -138,6 +138,12 @@ class PostController extends Controller
             ])->where('status', '=', 'published')
             ->orderBy('created_at', 'desc')
             ->paginate(20);
-        return view('posts.public.index', compact('posts'));
+        return view('posts.public2.index', compact('posts'));
+    }
+
+    public function publicShow(Post $post)
+    {
+
+        return view('posts.public2.show', compact('post'));
     }
 }
